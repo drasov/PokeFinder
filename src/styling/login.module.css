@@ -1,0 +1,60 @@
+.loginContainer {
+    width: 300px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inputGroup {
+    margin-bottom: 10px;
+  }
+  
+  .label {
+    margin-bottom: 5px;
+  }
+  
+  .input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .loginButton{
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .loginButton:hover {
+    background-color: #0056b3;
+  }
+  
+.registerLink {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.registerLink p {
+  align-items: center;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.registerLink p:hover {
+  text-decoration: underline;
+}
+
+  

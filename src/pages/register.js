@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import styles from '../styling/register.module.css';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -22,30 +23,41 @@ const Register = () => {
     router.push('/login');
   };
 
+  const handleLoginRedirect = () => {
+    router.push('/login');
+  };
+
   return (
-    <div>
+    <div className={styles.registerContainer}>
       <h2>Register</h2>
       {error && <p>{error}</p>}
       {successMessage && <p>{successMessage}</p>}
-      <form onSubmit={handleRegister}>
-        <div>
-          <label>Username:</label>
+      <form onSubmit={handleRegister} className={styles.registerForm}>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Username:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className={styles.input}
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className={styles.input}
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" className={styles.registerButton}>
+          Register
+        </button>
       </form>
+      <div className={styles.registerLink}>
+        <p onClick={handleLoginRedirect}>Already have an account? Login here.</p>
+      </div>
     </div>
   );
 };

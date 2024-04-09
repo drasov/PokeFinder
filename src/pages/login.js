@@ -35,8 +35,6 @@ const Login = () => {
       setError('An error occurred during login');
     }
   };
-  
-
 
   const handleRegisterClick = () => {
     router.push('/register');
@@ -47,7 +45,7 @@ const Login = () => {
       <h2>Login</h2>
       {error && <p>{error}</p>}
       <form className={styles.loginForm} onSubmit={handleLogin}>
-        <div>
+        <div className={styles.inputGroup}>
           <label>Username:</label>
           <input
             type="text"
@@ -55,7 +53,7 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div>
+        <div className={styles.inputGroup}>
           <label>Password:</label>
           <input
             type="password"
@@ -63,10 +61,10 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className={styles.loginButton}>Login</button>
       </form>
       <div className={styles.registerLink}>
-        <button onClick={handleRegisterClick}>Register</button>
+        <p onClick={handleRegisterClick}>Register</p>
       </div>
     </div>
   );
