@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import Navbar from './navbar';
 import Pokemon from './pokemon';
-import styles from '../styling/background.module.css'
+import styles from '../styling/background.module.css';
+import homeStyles from '../styling/home.module.css'
+
 const Home = () => {
   const [startRange, setStartRange] = useState(0);
   const pokemonPerPage = 3; // Number of Pokemon to display per page
@@ -55,10 +57,11 @@ const Home = () => {
   return (
     <div className={styles.backgroundcolor}>
       <Navbar />
+      <h1 style={{ textAlign: 'center' }}>Wild Pokemon appeared!</h1>
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px' }}>
-        <button onClick={prevPage}>&lt;</button> {/* Button for previous page */}
+        <button className={homeStyles.button} onClick={prevPage}>&lt;</button> {/* Button for previous page */}
         {/* Render Pokemon within the current range */}
         {pokemonData.slice(startRange, startRange + pokemonPerPage).map((pokemon) => (
           <Pokemon
@@ -66,10 +69,9 @@ const Home = () => {
             name={pokemon.name}
             number={pokemon.id}
             types={pokemon.types.map((typeEntry) => typeEntry.type.name)}
-            imageUrl={pokemon.sprites.front_default}
-          />
+            imageUrl={pokemon.id > 920 ? pokemon.sprites.front_default : pokemon.sprites.other.showdown.front_default}/>
         ))}
-        <button onClick={nextPage}>&gt;</button> {/* Button for next page */}
+        <button className={homeStyles.button} onClick={nextPage}>&gt;</button>
       </div>
     </div>
   );
