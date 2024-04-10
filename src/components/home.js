@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Navbar from './navbar';
-import Pokemon from './pokemon';
+import Pokemon from './pokemonBD';
 import styles from '../styling/background.module.css';
-import homeStyles from '../styling/home.module.css'
+import homeStyles from '../styling/home.module.css';
 
 const Home = () => {
   const [startRange, setStartRange] = useState(0);
@@ -10,6 +11,7 @@ const Home = () => {
   const [pokemonData, setPokemonData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   // Function to fetch Pokemon data
   const fetchPokemonData = async () => {
@@ -54,24 +56,36 @@ const Home = () => {
     }
   };
 
+  // Function to handle Pokemon box click
+  const handlePokemonClick = (id) => {
+    router.push(`/pokemon/${id}`);
+  };
+
   return (
     <div className={styles.backgroundcolor}>
       <Navbar />
       <h1 style={{ textAlign: 'center' }}>Wild Pokemon appeared!</h1>
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px' }}>
-        <button className={homeStyles.button} onClick={prevPage}>&lt;</button> {/* Button for previous page */}
-        {/* Render Pokemon within the current range */}
-        {pokemonData.slice(startRange, startRange + pokemonPerPage).map((pokemon) => (
-          <Pokemon
-            key={pokemon.id}
-            name={pokemon.name}
-            number={pokemon.id}
-            types={pokemon.types.map((typeEntry) => typeEntry.type.name)}
-            imageUrl={pokemon.id > 920 ? pokemon.sprites.front_default : pokemon.sprites.other.showdown.front_default}/>
-        ))}
-        <button className={homeStyles.button} onClick={nextPage}>&gt;</button>
+      <div className={homeStyles.container}>
+        <div className={homeStyles.buttonContainer}>
+          <button className={homeStyles.button} onClick={prevPage}>&lt;</button> {/* Button for previous page */}
+        </div>
+        <div className={homeStyles.pokemonContainer}>
+          {pokemonData.slice(startRange, startRange + pokemonPerPage).map((pokemon) => (
+            <div key={pokemon.id} className={homeStyles.pokemonCard} onClick={() => handlePokemonClick(pokemon.id)}>
+              <Pokemon
+                name={pokemon.name}
+                number={pokemon.id}
+                types={pokemon.types.map((typeEntry) => typeEntry.type.name)}
+                imageUrl={pokemon.id > 920 ? pokemon.sprites.front_default : pokemon.sprites.other.showdown.front_default}
+              />
+            </div>
+          ))}
+        </div>
+        <div className={homeStyles.buttonContainer}>
+          <button className={homeStyles.button} onClick={nextPage}>&gt;</button>
+        </div>
       </div>
     </div>
   );

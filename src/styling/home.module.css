@@ -4,10 +4,31 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #7b8dc0; 
+    background-color: #6fb4fe; 
     color: white;
   }
   
   .button:hover {
-    background-color: #343c52;
+    background-color: #007bff;
   }
+
+  .container {
+    display: flex;
+    align-items: center; 
+  }
+  
+  .buttonContainer {
+    flex: 1; 
+    text-align: center; 
+  }
+
+  .pokemonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Adjust as needed */
+  }
+  
+  .pokemonCard {
+    cursor: pointer;
+  }
+  

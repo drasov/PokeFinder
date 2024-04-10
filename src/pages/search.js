@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Navbar from '../components/navbar';
-import Pokemon from '../components/pokemon';
+import Pokemon from '../components/pokemonBD';
 import styles from "../styling/background.module.css"
 
 const Search = () => {

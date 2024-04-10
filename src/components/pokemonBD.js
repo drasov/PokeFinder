@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styling/pokemon.module.css';
+import styles from '../styling/pokemonBD.module.css';
 
 const Pokemon = ({ name, number, types, imageUrl }) => {
   // Define background colors for each type
