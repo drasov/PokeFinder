@@ -1,0 +1,14 @@
+.wildPokeContainer
+{
+    margin: 30px auto;
+    width: 500px;
+    padding: 1px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.872);
+}
+.wildPokemon
+{
+    color:rgb(239, 239, 239);
+    text-align: center;
+    margin: '20px 0';
+}

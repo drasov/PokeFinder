@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styling/login.module.css';
+import Navbar from '../components/navbar';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -41,6 +42,8 @@ const Login = () => {
   };
 
   return (
+    <div>
+    <Navbar />
     <div className={styles.loginContainer}>
       <h2>Login</h2>
       {error && <p>{error}</p>}
@@ -66,6 +69,7 @@ const Login = () => {
       <div className={styles.registerLink}>
         <p onClick={handleRegisterClick}>Register</p>
       </div>
+    </div>
     </div>
   );
 };

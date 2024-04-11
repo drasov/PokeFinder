@@ -56,16 +56,13 @@ const Home = () => {
     }
   };
 
-  // Function to handle Pokemon box click
-  const handlePokemonClick = (id) => {
-    router.push(`/pokemon/${id}`);
-  };
-
   return (
     <div className={styles.backgroundcolor}>
       <Navbar />
-      <h1 style={{ textAlign: 'center' }}>Wild Pokemon appeared!</h1>
-      {isLoading && <p>Loading...</p>}
+      <div className={homeStyles.wildPokeContainer}>
+        <h1 className={homeStyles.wildPokemon}>Wild Pokemon appeared!</h1>
+      </div>
+      {isLoading && <h1 style={{textAlign:'center'}}>Loading...</h1>}
       {error && <p>Error: {error.message}</p>}
       <div className={homeStyles.container}>
         <div className={homeStyles.buttonContainer}>
@@ -73,7 +70,7 @@ const Home = () => {
         </div>
         <div className={homeStyles.pokemonContainer}>
           {pokemonData.slice(startRange, startRange + pokemonPerPage).map((pokemon) => (
-            <div key={pokemon.id} className={homeStyles.pokemonCard} onClick={() => handlePokemonClick(pokemon.id)}>
+            <div key={pokemon.id} className={homeStyles.pokemonCard}>
               <Pokemon
                 name={pokemon.name}
                 number={pokemon.id}

@@ -1,11 +1,14 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import styles from '../styling/pokemonBD.module.css';
 
-const Pokemon = ({ name, number, types, imageUrl }) => {
+const Pokemon = ({ name, number, types, imageUrl, onClick }) => {
+  const router = useRouter();
+
   // Define background colors for each type
   const backgroundColors = {
     normal: '#e2e2e2',
-    fire: '#f4e2ca',
+    fire: '#f2864b',
     water: '#caf4f1',
     electric: '#f4f1ca',
     grass: '#c7e5c7',
@@ -24,6 +27,10 @@ const Pokemon = ({ name, number, types, imageUrl }) => {
     fairy: '#fdb9e9',
   };
 
+  const handleClick = () => {
+    router.push(`/pokemon/${number}`);
+  };
+
   // Render type containers
   const typeContainers = types?.map((type, index) => {
     const backgroundColor = backgroundColors[type];
@@ -35,7 +42,7 @@ const Pokemon = ({ name, number, types, imageUrl }) => {
   });
 
   return (
-    <div className={styles.pokemonDetails}>
+    <div className={styles.pokemonDetails} onClick={handleClick} style={{ cursor: 'pointer' }}>
       <img src={imageUrl} alt={name} className={styles.image} />
       <hr className={styles.separator} />
       <div className={styles.info}>

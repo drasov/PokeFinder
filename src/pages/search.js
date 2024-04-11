@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Navbar from '../components/navbar';
 import Pokemon from '../components/pokemonBD';
 import styles from "../styling/background.module.css"
+import searchstyle from "../styling/search.module.css"
 
 const Search = () => {
   const router = useRouter();
@@ -37,7 +38,9 @@ const Search = () => {
   return (
     <div className={styles.backgroundcolor}>
       <Navbar />
-      <h1 style={{ textAlign: 'center', margin: '20px 0' }}>A Wild {pokemonData && pokemonData.name} appeared!</h1>
+      <div className={searchstyle.wildPokeContainer}>
+        <h1 className={searchstyle.wildPokemon}>A Wild {pokemonData && pokemonData.name} appeared!</h1>
+      </div>
       {error && <p>Error fetching data: {error}</p>}
       {pokemonData && (
         <div style={{ textAlign: 'center' }}>
