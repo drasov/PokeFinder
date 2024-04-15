@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styling/login.module.css';
-import Navbar from '../components/navbar';
+import Navbar from '../components/navbar'; 
+import backgroundStyles from "../styling/background.module.css"
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -42,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className={backgroundStyles.backgroundcolor}>
     <Navbar />
     <div className={styles.loginContainer}>
       <h2>Login</h2>

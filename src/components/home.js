@@ -27,7 +27,8 @@ const Home = () => {
 
       // Fetch data for each random number
       const promises = randomNumbers.map((num) =>
-        fetch(`https://pokeapi.co/api/v2/pokemon/${num}`).then((response) => response.json())
+        fetch(`https://pokeapi.co/api/v2/pokemon/${num}`)
+        .then((response) => response.json())
       );
       const pokemonData = await Promise.all(promises);
       setPokemonData(pokemonData);
@@ -66,7 +67,7 @@ const Home = () => {
       {error && <p>Error: {error.message}</p>}
       <div className={homeStyles.container}>
         <div className={homeStyles.buttonContainer}>
-          <button className={homeStyles.button} onClick={prevPage}>&lt;</button> {/* Button for previous page */}
+          <button className={homeStyles.button} onClick={prevPage}>&lt;</button> 
         </div>
         <div className={homeStyles.pokemonContainer}>
           {pokemonData.slice(startRange, startRange + pokemonPerPage).map((pokemon) => (
