@@ -36,7 +36,6 @@ export default async function handler(req, res) {
     // Insert the new user into the database
     await db.collection('users').insertOne(newUser);
 
-    // Close the MongoDB connection
     await client.close();
 
     return res.status(201).json({ message: 'User registered successfully' });

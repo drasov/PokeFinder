@@ -27,7 +27,6 @@ const Login = () => {
         const token = data.token;
         
         // Handle successful login
-        console.log('JWT token:', token);
         router.push('/');
       } else {
         setError('Invalid username or password');

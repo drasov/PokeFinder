@@ -1,26 +1,46 @@
+// api/authenticate.js
+import { MongoClient } from 'mongodb';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-require('dotenv').config();
-console.log(process.env.MY_SECRET_TOKEN);
 
-const registeredUsername = process.env.REGISTERED_USERNAME;
-const registeredPassword = process.env.REGISTERED_PASSWORD;
+const { MONGODB_URI, MONGODB_DB, JWT_SECRET } = process.env;
 
-export default function handler(req, res) {
-  if (req.method === 'POST') {
-    const { username, password } = req.body;
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
+  }
 
-    const jwtSecret = process.env.MY_SECRET_TOKEN;
+  const { username, password } = req.body;
 
-    if (username === registeredUsername && password === registeredPassword) {
-      console.log(username, password, registeredUsername, registeredPassword)
-      console.log("Login was successful!")
+  try {
+    // Connect to MongoDB
+    const client = await MongoClient.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    const db = client.db(MONGODB_DB);
 
-      const token = jwt.sign({ username }, jwtSecret);
+    // Fetch the user from the database
+    const user = await db.collection('users').findOne({ username });
+
+    // Check if the user exists and compare passwords
+    if (user && await bcrypt.compare(password, user.password)) {
+      // Generate JWT token
+      const token = jwt.sign({ username: user.username, userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+
+      // Close the MongoDB connection
+      await client.close();
+
+      // Return the token
       return res.status(200).json({ token });
     } else {
-      return res.status(401).json({ error: 'Unauthorized', message: 'Invalid username or password' });
+      // Close the MongoDB connection
+      await client.close();
+
+      return res.status(401).json({ message: 'Invalid username or password' });
     }
-  } else {
-    return res.status(405).json({ error: 'Method Not Allowed', message: 'Only POST requests are allowed' });
+  } catch (error) {
+    console.error('Error authenticating user:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
 }
