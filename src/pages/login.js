@@ -25,8 +25,11 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
-        
-        // Handle successful login
+  
+        // Store the JWT token in localStorage
+        localStorage.setItem('token', token);
+  
+        // Redirect or perform other actions after successful login
         router.push('/');
       } else {
         setError('Invalid username or password');
@@ -36,6 +39,7 @@ const Login = () => {
       setError('An error occurred during login');
     }
   };
+  
 
   const handleRegisterClick = () => {
     router.push('/register');

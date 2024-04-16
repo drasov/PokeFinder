@@ -4,6 +4,7 @@ import Navbar from '../../components/navbar';
 import stylesbackground from '../../styling/background.module.css';
 import styles from '../../styling/pokeDetail.module.css';
 import pokemonStyles from '../../styling/pokemonBD.module.css';
+import withAuth from '../utils/withAuth';
 
 const PokemonPage = () => {
   const router = useRouter();
@@ -11,7 +12,6 @@ const PokemonPage = () => {
   const [pokemonData, setPokemonData] = useState(null);
   const [habitatData, setHabitatData] = useState(null); 
   const [GrowthRate, setGrowthRateData] = useState(null); 
-  const [encounterLocations, setEncounterLocations] = useState([]);
   const [error, setError] = useState(null);
 
   const backgroundColors = {
@@ -55,16 +55,8 @@ const PokemonPage = () => {
         setHabitatData(speciesData.habitat); 
         setGrowthRateData(speciesData.growth_rate); 
 
-        // Fetch encounter locations
-        const encounterResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`);
-        if (!encounterResponse.ok) {
-          throw new Error('Encounter data not found');
-        }
-        const encounterData = await encounterResponse.json();
-        setEncounterLocations(encounterData.map(location => location.location_area.name));
-
       } catch (error) {
-        setError(error);
+        router.push('/404');
       }
     };
   
@@ -120,8 +112,6 @@ const PokemonPage = () => {
               Forms: {pokemonData.forms.length > 0 ? pokemonData.forms.map((form) => form.name).join(', ') : 'No forms available'}
               <br />
               Growth Rate: {GrowthRate ? GrowthRate.name : 'Unknown'}
-              <br /><br />
-              Encounter Locations: {encounterLocations.length > 0 ? encounterLocations.join(', ') : 'No encounter locations available'}
               <br /><br />
               Game Indices: {pokemonData.game_indices.length > 0 ? pokemonData.game_indices.map((index) => index.version.name).join(', ') : 'No game indices available'}
             </>
@@ -197,4 +187,4 @@ const PokemonPage = () => {
   );
 };
 
-export default PokemonPage;
+export default withAuth(PokemonPage);

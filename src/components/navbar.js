@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styling/navbar.module.css';
 
-const Navbar = ({ loggedIn, username }) => {
+const Navbar = ({ handleLogout }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false); 
   const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is logged in (i.e., JWT token exists in localStorage)
+    const token = localStorage.getItem('token');
+    if (token) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  }, []);
 
   const handleSearch = () => {
     if (searchQuery.trim() !== '') {
@@ -19,25 +29,11 @@ const Navbar = ({ loggedIn, username }) => {
     }
   };
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
-  const handleDropdownToggle = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  const handleFavourites = () => {
-    router.push('/favourites');
-  };
-
-  const handleRecentlyViewed = () => {
-    router.push('/recently-viewed');
-  };
-
-  const handleLogout = () => {
-    // Perform logout actions here
+  const handleLogoutClick = () => {
+    localStorage.removeItem('token');
+    setLoggedIn(false)
     router.push('/');
+    //window.location.reload();
   };
 
   return (
@@ -51,7 +47,7 @@ const Navbar = ({ loggedIn, username }) => {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyPress={handleKeyPress} // Add event listener for Enter key press
+          onKeyPress={handleKeyPress}
           placeholder="Search..."
           className={styles.searchInput}
         />
@@ -63,19 +59,12 @@ const Navbar = ({ loggedIn, username }) => {
       <div className={styles.actions}>
         {loggedIn ? (
           <div className={styles.dropdown}>
-            <button onClick={handleDropdownToggle} className={styles.usernameButton}>
-              {username}
+            <button onClick={handleLogoutClick} className={styles.loginLogoutButton}>
+              Logout
             </button>
-            {dropdownOpen && (
-              <div className={styles.dropdownContent}>
-                <button onClick={handleFavourites}>Favourites</button>
-                <button onClick={handleRecentlyViewed}>Recently Viewed</button>
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            )}
           </div>
         ) : (
-          <button onClick={handleLogin} className={styles.loginButton}>
+          <button onClick={() => router.push('/login')} className={styles.loginLogoutButton}>
             Login
           </button>
         )}

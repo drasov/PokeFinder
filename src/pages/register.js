@@ -30,7 +30,6 @@ const Register = () => {
         throw new Error(data.error || 'Registration failed');
       }
 
-      // Display success message
       setSuccessMessage(data.message);
 
       // Redirect to login page after successful registration
